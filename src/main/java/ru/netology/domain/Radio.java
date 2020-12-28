@@ -2,20 +2,33 @@ package ru.netology.domain;
 
 public class Radio {
 
-    private int currentChannel; // канал 0..9 по кругу
-    private int soundVolume;  // громкость 0..10 c ограничением
-
-    public static final int MAX_CHANNEL = 9;
+    public static final int DEFAULT_MAX_CHANNEL = 10;
     public static final int MIN_CHANNEL = 0;
-    public static final int MAX_VOLUME = 10;
+    public static final int MAX_VOLUME = 100;
     public static final int MIN_VOLUME = 0;
+
+    private int maxChannel = DEFAULT_MAX_CHANNEL;     //
+    private int currentChannel; // канал 0..MAX_CHANNEL по кругу
+    private int soundVolume;  // громкость 0..MAX_VOLUME c ограничением
+
+    public Radio() {
+    }
+
+    public Radio(int maxChannel) {
+        this.maxChannel = maxChannel;
+    }
+
 
     public int getCurrentChannel() {
         return currentChannel;
     }
 
+    public int getMaxChannel() {
+        return maxChannel;
+    }
+
     public void setCurrentChannel(int currentChannel) {
-        if (currentChannel > MAX_CHANNEL) {
+        if (currentChannel > maxChannel) {
             return;
         }
         if (currentChannel < MIN_CHANNEL) {
@@ -25,7 +38,7 @@ public class Radio {
     }
 
     public void incCurrentChannel() {
-        if (currentChannel < MAX_CHANNEL) {
+        if (currentChannel < maxChannel) {
             ++currentChannel;
         } else {
             currentChannel = MIN_CHANNEL;
@@ -36,7 +49,7 @@ public class Radio {
         if (currentChannel > MIN_CHANNEL) {
             --currentChannel;
         } else {
-            currentChannel = MAX_CHANNEL;
+            currentChannel = maxChannel;
         }
     }
 
@@ -58,8 +71,8 @@ public class Radio {
 
     // setSoundVolume в задаче не требовалось, но удобно
     public void setSoundVolume(int soundVolume) {
-        if (soundVolume > 10) return;
-        if (soundVolume < 0) return;
+        if (soundVolume > MAX_VOLUME) return;
+        if (soundVolume < MIN_VOLUME) return;
         this.soundVolume = soundVolume;
     }
 

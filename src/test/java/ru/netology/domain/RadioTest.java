@@ -6,13 +6,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
 
-    Radio radio = new Radio();
+    public static final int MAX_CHANNEL = 20; // количество каналов
+
+    Radio radio = new Radio(MAX_CHANNEL);
 
     ////////////Channel////////////////
     @Test
+    public void showDefaultMaxChannel() {
+        Radio radio = new Radio(); // проверка каналов по умолчанию
+        assertEquals(10, radio.getMaxChannel());
+    }
+
+    @Test
     public void showSetExtremChannel() {
-        radio.setCurrentChannel(9);
-        assertEquals(9, radio.getCurrentChannel());
+        radio.setCurrentChannel(MAX_CHANNEL);
+        assertEquals(MAX_CHANNEL, radio.getCurrentChannel());
         radio.setCurrentChannel(0);
         assertEquals(0, radio.getCurrentChannel());
     }
@@ -20,7 +28,7 @@ class RadioTest {
     @Test
     public void showSetExhaledChannel() {
         int beforeChange = radio.getCurrentChannel();
-        radio.setCurrentChannel(10);
+        radio.setCurrentChannel(MAX_CHANNEL+1);
         assertEquals(beforeChange, radio.getCurrentChannel());
         radio.setCurrentChannel(-1);
         assertEquals(beforeChange, radio.getCurrentChannel());
@@ -28,29 +36,29 @@ class RadioTest {
 
     @Test
     public void showIncChannel() {
-        radio.setCurrentChannel(5);
+        radio.setCurrentChannel(MAX_CHANNEL-1);
         radio.incCurrentChannel();
-        assertEquals(6, radio.getCurrentChannel());
-        radio.setCurrentChannel(9);
+        assertEquals(MAX_CHANNEL, radio.getCurrentChannel());
+        //radio.setCurrentChannel(MAX_CHANNEL);
         radio.incCurrentChannel();
         assertEquals(0, radio.getCurrentChannel());
     }
 
     @Test
     public void showDecChannel() {
-        radio.setCurrentChannel(5);
+        radio.setCurrentChannel(MAX_CHANNEL);
         radio.decCurrentChannel();
-        assertEquals(4, radio.getCurrentChannel());
+        assertEquals(MAX_CHANNEL-1, radio.getCurrentChannel());
         radio.setCurrentChannel(0);
         radio.decCurrentChannel();
-        assertEquals(9, radio.getCurrentChannel());
+        assertEquals(MAX_CHANNEL, radio.getCurrentChannel());
     }
 
     ///////////// Volume/////////////
     @Test
     public void showSetExtremVolume() {
-        radio.setSoundVolume(10);
-        assertEquals(10, radio.getSoundVolume());
+        radio.setSoundVolume(100);
+        assertEquals(100, radio.getSoundVolume());
         radio.setSoundVolume(0);
         assertEquals(0, radio.getSoundVolume());
     }
@@ -58,7 +66,7 @@ class RadioTest {
     @Test
     public void showSetExhaledVolume() {
         int beforeChange = radio.getSoundVolume();
-        radio.setSoundVolume(11);
+        radio.setSoundVolume(101);
         assertEquals(beforeChange, radio.getSoundVolume());
         radio.setSoundVolume(-1);
         assertEquals(beforeChange, radio.getSoundVolume());
@@ -69,9 +77,9 @@ class RadioTest {
         radio.setSoundVolume(5);
         radio.incSoundVolume();
         assertEquals(6, radio.getSoundVolume());
-        radio.setSoundVolume(10);
+        radio.setSoundVolume(100);
         radio.incSoundVolume();
-        assertEquals(10, radio.getSoundVolume());
+        assertEquals(100, radio.getSoundVolume());
     }
 
     @Test
